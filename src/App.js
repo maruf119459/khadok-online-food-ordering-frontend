@@ -1,10 +1,17 @@
-import logo from './logo.svg';
+import { ThemeProvider } from '@emotion/react';
 import './App.css';
+import Navbar from './component/Navbar/Navbar';
+import { colorTheme } from './Theme/ColorTheme';
+import { CssBaseline } from '@mui/material';
 
 function App() {
   return (
-    <div className="App">
-      <h1 className='text-blue-600'>Khadok online food ordering system</h1>
+    <div>
+      <ThemeProvider theme={colorTheme}>
+      <CssBaseline/>
+      <Navbar></Navbar>
+
+      </ThemeProvider>
     </div>
   );
 }
