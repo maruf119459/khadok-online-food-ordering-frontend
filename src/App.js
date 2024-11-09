@@ -3,7 +3,8 @@ import './App.css';
 import Navbar from './component/Navbar/Navbar';
 import { colorTheme } from './Theme/ColorTheme';
 import { CssBaseline } from '@mui/material';
-import RestaurantDetails from './component/Restaurant/RestaurantDetails';
+// import RestaurantDetails from './component/Restaurant/RestaurantDetails';
+import Cart from './component/Cart/Cart';
 // import Home from './component/Home/Home';
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
         <CssBaseline />
         <Navbar></Navbar>
         {/* <Home/> */}
-        <RestaurantDetails/>
+        {/* <RestaurantDetails/> */}
+        <Cart/>
       </ThemeProvider>
     </div>
   );
