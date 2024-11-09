@@ -1,0 +1,39 @@
+
+export const topFood = [
+    {
+        image:"https://cdn.pixabay.com/photo/2017/12/05/20/10/pizza-3000285_960_720.png",
+        title:"Pizza"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2021/09/25/18/54/dish-6655595_960_720.jpg",
+        title:"Biryani"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2017/08/06/04/16/cupcake-2588646_1280.jpg",
+        title:"Muffin"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2016/11/08/10/39/chicken-1807883_1280.jpg",
+        title:"Roast Chicken"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2015/04/08/13/13/pasta-712664_1280.jpg",
+        title:"Noodles"
+    },
+    {
+        image:"https://img-global.cpcdn.com/recipes/dffa384b84c6c693/680x482cq70/%E0%A6%AA%E0%A6%AF%E0%A6%B8-bhoger-payesh-traditional-payesh-recipe-in-bengali-%E0%A6%B0%E0%A6%B8%E0%A6%AA%E0%A6%B0-%E0%A6%AA%E0%A6%B0%E0%A6%A7%E0%A6%A8-%E0%A6%9B%E0%A6%AC.webp",
+        title:"Payesh"
+    },
+    {
+        image:"https://cdn.pixabay.com/photo/2022/09/24/07/31/pasta-7475756_1280.jpg",
+        title:"Pasta"
+    },
+    {
+        image:"https://maldivescook.com/wp-content/uploads/beef-curry.jpg",
+        title:"Beef-curry"
+    },
+    {
+        image:"https://i.pinimg.com/564x/54/c9/82/54c9821974ef74196f28462644f016da.jpg",
+        title:"Rosogolla"
+    }
+]
