@@ -7,9 +7,20 @@ import { CssBaseline } from '@mui/material';
 // import Cart from './component/Cart/Cart';
 import Profile from './component/Profile/Profile';
 import CustomerRoute from './Routers/CustomerRoute';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from './component/State/Authentication/Action';
 // import Home from './component/Home/Home';
 
 function App() {
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { auth } = useSelector(store => store)
+
+  useEffect(() => {
+
+    dispatch(getUser(auth.jwt || jwt))
+  }, [dispatch, jwt, auth.jwt])
   return (
     <div>
       <ThemeProvider theme={colorTheme}>
@@ -19,7 +30,7 @@ function App() {
         {/* <RestaurantDetails/> */}
         {/* <Cart/> */}
         {/* <Profile/> */}
-        <CustomerRoute/>
+        <CustomerRoute />
       </ThemeProvider>
     </div>
   );
