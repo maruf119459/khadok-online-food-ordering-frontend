@@ -49,8 +49,8 @@ const menuItemReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 menuItems: state.menuItems.map(
-                    (menuItem) => menuItem.id === action.payload.id ? action.
-                        payload : menuItem
+                    (menuItem) => menuItem.id === action.payload.id ? 
+                    action.payload : menuItem
                 ),
             };
         case actionTypes.SEARCH_MENU_ITEM_SUCCESS:
