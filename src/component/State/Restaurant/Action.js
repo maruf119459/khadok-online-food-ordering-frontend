@@ -1,6 +1,6 @@
 
 
-import { api } from " .. / .. / .. /config/api";
+import { api } from "../../../config/api";
 
 
 import {
