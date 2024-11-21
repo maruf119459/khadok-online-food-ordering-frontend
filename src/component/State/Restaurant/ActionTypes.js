@@ -57,3 +57,27 @@ export const CREATE_CATEGORY_FAILURE = "CREATE_CATEGORY_FAILURE";
 export const GET_RESTAURANTS_CATEGORY_REQUEST = "GET_RESTAURANTS_CATEGORY_REQUEST";
 export const GET_RESTAURANTS_CATEGORY_SUCCESS = "GET_RESTAURANTS_CATEGORY_SUCCESS";
 export const GET_RESTAURANTS_CATEGORY_FAILURE = "GET_RESTAURANTS_CATEGORY_FAILURE";
+
+
+/*
+
+import {
+createRestaurantFailure,
+createRestaurantRequest,
+createRestaurantSuccess,
+deleteRestaurantFailure,
+deleteRestaurantRequest,
+deleteRestaurantSuccess,
+getAllRestaurantsFailure,
+getAllRestaurantsRequest,
+getAllRestaurantsSuccess,
+getRestaurantByIdFailure,
+getRestaurantByIdRequest,
+getRestaurantByIdSuccess,
+updateRestaurantFailure,
+updateRestaurantRequest,
+updateRestaurantSuccess,
+} from "./ActionCreateros";
+
+
+*/
