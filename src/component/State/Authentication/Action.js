@@ -85,7 +85,6 @@ export const addToFavorite=(jwt,restaurantId)=>async(dispatch)=>{
 }
 
 export const logout=()=>async(dispatch)=>{
-    dispatch({type:ADD_TO_FAVORITE_REQUEST})
 
     try{
         localStorage.clear()
