@@ -7,7 +7,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const Navbar = () => {
-    const { auth } = useSelector(store => store);
+    const { auth, cart } = useSelector(store => store);
     const navigate = useNavigate();
 
     const handleAvatarClick = () => {
@@ -38,13 +38,13 @@ const Navbar = () => {
                 </div>
 
                 <div className=''>
-                    <IconButton>
+                    <IconButton onClick={()=>navigate("/cart")}>
                         <Badge sx={{
                             "& .MuiBadge-badge": {
                                 backgroundColor: "#EC7755",  // Custom badge color
                                 color: "#FFFFFF",            // Badge text color
                             },
-                        }} badgeContent={2}>
+                        }} badgeContent={cart.cart?.items?.length}>
                             <ShoppingCartIcon sx={{ fontSize: "1.5rem", color: "#000000" }} />
                         </Badge>
                     </IconButton>

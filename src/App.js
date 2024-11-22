@@ -10,6 +10,7 @@ import CustomerRoute from './Routers/CustomerRoute';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './component/State/Authentication/Action';
+import { findCart } from './component/State/Cart/Action';
 // import Home from './component/Home/Home';
 
 function App() {
@@ -18,8 +19,8 @@ function App() {
   const { auth } = useSelector(store => store)
 
   useEffect(() => {
-
-    dispatch(getUser(auth.jwt || jwt))
+    dispatch(getUser(auth.jwt || jwt));
+    dispatch(findCart(jwt));
   }, [dispatch, jwt, auth.jwt])
   return (
     <div>
