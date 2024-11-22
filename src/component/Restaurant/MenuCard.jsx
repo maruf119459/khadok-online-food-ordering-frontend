@@ -39,12 +39,12 @@ const MenuCard = () => {
                 <form>
                     <div className='flex gap-5 flex-wrap'>
                         {
-                            demo.map((item) =>
-                                <div>
+                            demo.map((item,index) =>
+                                <div key={index}>
                                     <p>{item.category}</p>
                                     <FormGroup>
                                         {
-                                            item.ingredients.map((item) =><FormControlLabel control={<Checkbox onChange={()=>handleCheckBoxChange(item)} />} label={item} />
+                                            item.ingredients.map((item,index) =><FormControlLabel key={index} control={<Checkbox onChange={()=>handleCheckBoxChange(item)} />} label={item} />
                                         )
                                         }
                                     </FormGroup>

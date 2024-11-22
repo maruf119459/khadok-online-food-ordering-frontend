@@ -20,7 +20,7 @@ const Carousel = () => {
     return (
         <div>
             <Slider {...settings}>
-                {topFood.map((item) => <CarouselItem image={item.image} title={item.title}></CarouselItem>)}
+                {topFood.map((item, index) => <CarouselItem key={index} image={item.image} title={item.title}></CarouselItem>)}
             </Slider>
         </div>
     );
