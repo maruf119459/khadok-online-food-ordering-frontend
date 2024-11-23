@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from './component/State/Authentication/Action';
 import { findCart } from './component/State/Cart/Action';
+import Routers from './Routers/Routers';
 // import Home from './component/Home/Home';
 
 function App() {
@@ -31,7 +32,8 @@ function App() {
         {/* <RestaurantDetails/> */}
         {/* <Cart/> */}
         {/* <Profile/> */}
-        <CustomerRoute />
+
+        <Routers />
       </ThemeProvider>
     </div>
   );
