@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Grid, IconButton, CircularProgress, Button, TextField, MenuItem } from "@mui/material";
+import { Grid, IconButton, CircularProgress, Button, TextField } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import CloseIcon from "@mui/icons-material/Close";
 import { useFormik } from "formik";
-
+import {uploadphoto} from '../AdminUtil/UploadPhoto'
 const initialValues = {
   name: "",
   description: "",
@@ -27,28 +27,47 @@ const CreateRestaurantForm = () => {
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      console.log("Form Submitted", values);
+      const data = {
+        name: values.name,
+        description: values.description,
+        cuisineType: values.cuisineType,
+        address: {
+          streetAddress: values.streetAddress,
+          city: values.city,
+          stateProvince: values.stateProvince,
+          postalCode: values.postalCode, // Corrected "potalCode"
+          country: values.country,
+        },
+        contactInformation: {
+          email: values.email,
+          mobile: values.mobile,
+          twitter: values.twitter,
+          instagram: values.instagram,
+        },
+        openingHours: values.openingHours, // Corrected "opningHours"
+        images: values.images,
+      };
+
+      console.log(data);
     },
   });
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setUploadImage(true);
-      // Simulate image upload (e.g., to a server or Cloudinary)
-      setTimeout(() => {
-        const newImageURL = URL.createObjectURL(file); // Temporary URL for local display
-        formik.setFieldValue("images", [...formik.values.images, newImageURL]);
-        setUploadImage(false);
-      }, 1000); // Simulate 1-second upload delay
-    }
-  };
 
-  const handleRemoveImage = (index) => {
-    const updatedImages = [...formik.values.images];
-    updatedImages.splice(index, 1);
-    formik.setFieldValue("images", updatedImages);
-  };
+  const handleImageChange = async(e) => {
+    const file=e.target.files[0]
+    setUploadImage(true)
+    const image = await uploadphoto(file)
+    formik.setFieldValue("images", [ ...formik.values.images, image])
+    setUploadImage(false)
+    };
+
+
+
+    const handleRemoveImage = (index) => {
+      const updatedImages=[ ...formik.values.images]
+      updatedImages.splice(index,1);
+      formik.setFieldValue("images",updatedImages)
+    }
 
   return (
     <div className="py-10 lg:flex items-center justify-center min-h-screen  text-black">
@@ -96,7 +115,7 @@ const CreateRestaurantForm = () => {
                       }}
                       onClick={() => handleRemoveImage(index)}
                     >
-                      <CloseIcon style={{ color: "white" , fontSize:"1rem"}} />
+                      <CloseIcon style={{ color: "white", fontSize: "1rem" }} />
                     </IconButton>
                   </div>
                 ))}
@@ -118,10 +137,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="openingHours"
                 label="Opening Houre"
                 variant="outlined"
-                name="openingHoures"
-                value={formik.values.name}
+                name="openingHours"
+                value={formik.values.openingHours}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -129,6 +149,7 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="cuisineType"
                 label="Cuisine Type"
                 variant="outlined"
                 name="cuisineType"
@@ -140,6 +161,7 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12}>
               <TextField
                 fullWidth
+                id="description"
                 label="Description"
                 variant="outlined"
                 multiline
@@ -153,6 +175,7 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="streetAddress"
                 label="Street Address"
                 variant="outlined"
                 name="streetAddress"
@@ -163,6 +186,7 @@ const CreateRestaurantForm = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                id="city"
                 fullWidth
                 label="City"
                 variant="outlined"
@@ -175,6 +199,7 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
+                id="stateProvince"
                 label="State/Province"
                 variant="outlined"
                 name="stateProvince"
@@ -186,10 +211,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
+                id="postalCode"
                 label="Postal Code"
                 variant="outlined"
-                name="stateProvince"
-                value={formik.values.stateProvince}
+                name="postalCode"
+                value={formik.values.postalCode}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -197,10 +223,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
+                id="country"
                 label="Country"
                 variant="outlined"
-                name="stateProvince"
-                value={formik.values.stateProvince}
+                name="country"
+                value={formik.values.country}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -208,10 +235,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="mobile"
                 label="Mobile"
                 variant="outlined"
-                name="stateProvince"
-                value={formik.values.stateProvince}
+                name="mobile"
+                value={formik.values.mobile}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -219,10 +247,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="email"
                 label="Email"
                 variant="outlined"
-                name="stateProvince"
-                value={formik.values.stateProvince}
+                name="email"
+                value={formik.values.email}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -230,10 +259,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="instagram"
                 label="Instagram"
                 variant="outlined"
-                name="stateProvince"
-                value={formik.values.stateProvince}
+                name="instagram"
+                value={formik.values.instagram}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -241,10 +271,11 @@ const CreateRestaurantForm = () => {
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
+                id="twitter"
                 label="Twitter"
                 variant="outlined"
-                name="stateProvince"
-                value={formik.values.stateProvince}
+                name="twitter"
+                value={formik.values.twitter}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />
@@ -256,7 +287,7 @@ const CreateRestaurantForm = () => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ bgcolor: "#EC7755",}}              >
+                sx={{ bgcolor: "#EC7755", }}              >
                 Create Restaurant
               </Button>
             </Grid>
