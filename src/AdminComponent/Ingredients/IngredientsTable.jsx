@@ -32,12 +32,12 @@ const modalStyle = {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
-  };
+};
 const IngredientsTable = () => {
     const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     return (
         <Box>
             <Card className="mt-1">
@@ -77,15 +77,15 @@ const IngredientsTable = () => {
                 </TableContainer>
             </Card>
             <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-      >
-        <Box sx={modalStyle}>
-          <CreateIngredientForm />
-        </Box>
-      </Modal>
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+            >
+                <Box sx={modalStyle}>
+                    <CreateIngredientForm />
+                </Box>
+            </Modal>
         </Box>
     );
 };
