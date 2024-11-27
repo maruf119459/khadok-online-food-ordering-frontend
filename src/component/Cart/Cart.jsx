@@ -6,8 +6,7 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../State/Order/Action';
-
-const items = [1, 1, 1, 1, 1];
+import locationImg from '../../assetes/locationImg.png'
 
 export const style = {
     position: 'absolute',
@@ -36,16 +35,15 @@ const validationSchema = Yup.object().shape({
 });
 
 const Cart = () => {
-    const handleSelectAddress = () => { };
     const dispatch = useDispatch();
     const handleOpenAddressModal = () => {
         setOpen(true);
     };
 
     const [open, setOpen] = useState(false);
-    
-    const {cart,auth}=useSelector(store=>store)
-    
+
+    const { cart, auth } = useSelector(store => store)
+
     const handleClose = () => setOpen(false);
 
     const handleSubmit = (values) => {
@@ -65,13 +63,13 @@ const Cart = () => {
         };
         dispatch(createOrder(data))
     };
-    
 
+    console.log("cart page", cart)
     return (
         <div>
             <main className='lg:flex justify-between'>
                 <section className='lg:w-[30%] space-y-6 lg:min-h-screen pt-10'>
-                    {cart?.cartItems?.map((item, index) => <CartItem key={index} item={item} />)}
+                    {cart.cart?.item.map((item, index) => <CartItem key={index} item={item} />)}
                     <Divider />
                     <div className='billDetails px-5 text-sm'>
                         <p className='font-extralight py-5'>Bill Details</p>
@@ -82,37 +80,45 @@ const Cart = () => {
                             </div>
                             <div className='flex justify-between'>
                                 <p>Delivery Fee</p>
-                                <p>৳ 21</p>
+                                <p>৳ {cart?.cart?.total === 0 ? 0 : 21}</p>
                             </div>
                             <div className='flex justify-between'>
                                 <p>Tax</p>
-                                <p>৳ 5</p>
+                                <p>৳ {cart?.cart?.total === 0 ? 0 : 5}</p>
                             </div>
                             <Divider />
                         </div>
                         <div className='flex justify-between'>
                             <p>Total Pay</p>
-                            <p>৳ {cart?.cart?.total+5+21}</p>
+                            <p>৳ {cart?.cart?.total === 0 ? 0 : cart?.cart?.total + 5 + 21}</p>
                         </div>
                     </div>
                 </section>
                 <Divider orientation='vertical' flexItem />
-                <section className='lg:w-[70%] flex justify-center px-5 pb-10 lg:pb-0'>
+                <section className='lg:w-[70%] flex flex-col  items-center  px-5 pb-10 lg:pb-0'>
                     <div>
-                        <h1 className='text-center font-semibold text-2xl py-10'>Choose Delivery Address</h1>
+                        <h1 className='text-center font-semibold text-2xl py-10'> Delivery Address</h1>
                         <div className='flex gap-5 flex-wrap justify-center'>
-                            {[1, 1, 1, 1, 1].map((item, index) => (
-                                <AddressCart key={index} handleSelectAddress={handleSelectAddress} item={item} showButton={true} />
-                            ))}
-                            <Card className="flex gap-5 w-64 p-5">
+
+                            <Card className="flex justify-center items-center w-64 p-5">
                                 <div className='space-y-3'>
-                                    <h1 className='font-semibold text-lg'>Add New Address</h1>
-                                    <Button variant='contained' fullWidth onClick={handleOpenAddressModal}>Add</Button>
+                                    <h1 className='font-semibold text-lg'>Set your Address</h1>
+                                    <Button variant='contained' fullWidth onClick={handleOpenAddressModal}>Insert Info</Button>
                                 </div>
                             </Card>
                         </div>
                     </div>
+                    <div className='mt-8'>
+                        <img
+                            src={locationImg}
+                            alt="Location"
+                            
+                            
+                        />
+                    </div>
                 </section>
+                
+                {/* locationImg.png */}
             </main>
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                 <Box sx={style}>
@@ -149,7 +155,7 @@ const Cart = () => {
                                                     color: "black" // Focused label color
                                                 }
                                             }}
-                                            
+
                                             error={<ErrorMessage name="streetAddress" />}
                                             helperText={<ErrorMessage name="streetAddress" component="span" className='text-red-500' />}
                                         />
@@ -183,7 +189,7 @@ const Cart = () => {
                                                     color: "black" // Focused label color
                                                 }
                                             }}
-                                            
+
                                             error={<ErrorMessage name="division" />}
                                             helperText={<ErrorMessage name="division" component="span" className='text-red-500' />}
                                         />
@@ -217,7 +223,7 @@ const Cart = () => {
                                                     color: "black" // Focused label color
                                                 }
                                             }}
-                                            
+
                                             error={<ErrorMessage name="postalcode" />}
                                             helperText={<ErrorMessage name="postalcode" component="span" className='text-red-500' />}
                                         />
@@ -251,7 +257,7 @@ const Cart = () => {
                                                     color: "black" // Focused label color
                                                 }
                                             }}
-                                            
+
                                             error={<ErrorMessage name="city" />}
                                             helperText={<ErrorMessage name="city" component="span" className='text-red-500' />}
                                         />

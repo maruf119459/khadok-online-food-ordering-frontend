@@ -10,7 +10,7 @@ const AddressCart = (item, showButton,handelSelectAddress) => {
             <p>
                 Dhaka, Ashulia, Cangao
             </p>
-            {showButton&& <Button variant='contained' fullWidth onClick={()=>handelSelectAddress(item)}>Select</Button>}
+            {showButton&& <Button variant='contained' fullWidth onClick={()=>handelSelectAddress(item)}>Select & Confrim Delivery</Button>}
             </div>
         </Card>
     );

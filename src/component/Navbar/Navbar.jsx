@@ -7,8 +7,10 @@ import LoginIcon from '@mui/icons-material/Login';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 const Navbar = () => {
-    const { auth, cart } = useSelector(store => store);
+    const {cart,auth}=useSelector(store=>store)
+    console.log("navbar cart", cart)
     const navigate = useNavigate();
+
 
     const handleAvatarClick = () => {
         if (auth.user?.role === "ROLE_CUSTOMER") {
@@ -37,18 +39,18 @@ const Navbar = () => {
 
                 </div>
 
-               { !auth.user?.role === "ROLE_CUSTOMER"?<div className=''>
+               { auth.user?.role === "ROLE_CUSTOMER"?<div className=''>
                     <IconButton onClick={()=>navigate("/cart")}>
                         <Badge sx={{
                             "& .MuiBadge-badge": {
                                 backgroundColor: "#EC7755",  // Custom badge color
                                 color: "#FFFFFF",            // Badge text color
                             },
-                        }} badgeContent={cart.cart?.items?.length}>
+                        }} badgeContent={cart.cart?.item?.length}>
                             <ShoppingCartIcon sx={{ fontSize: "1.5rem", color: "#000000" }} />
                         </Badge>
                     </IconButton>
-                </div>:<></>}
+                </div>:""}
                 <div className=''>
                     {auth.user ? <Avatar onClick={handleAvatarClick} sx={{ bgcolor: "#EF7C5D", color: "#FFD1B2" }}> {auth.user?.fullName[0].toUpperCase()}</Avatar> : <IconButton onClick={() => navigate("/account/login")}><LoginIcon /></IconButton>}
 
