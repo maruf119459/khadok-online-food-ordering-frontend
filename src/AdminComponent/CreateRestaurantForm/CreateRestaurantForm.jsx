@@ -4,6 +4,8 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import CloseIcon from "@mui/icons-material/Close";
 import { useFormik } from "formik";
 import {uploadphoto} from '../AdminUtil/UploadPhoto'
+import { useDispatch } from "react-redux";
+import { createRestaurant } from "../../component/State/Restaurant/Action";
 const initialValues = {
   name: "",
   description: "",
@@ -23,7 +25,8 @@ const initialValues = {
 
 const CreateRestaurantForm = () => {
   const [uploadImage, setUploadImage] = useState(false);
-
+   const dispatch = useDispatch();
+   const jwt = localStorage.getItem("jwt");
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
@@ -49,6 +52,7 @@ const CreateRestaurantForm = () => {
       };
 
       console.log(data);
+      dispatch(createRestaurant({data, token:jwt}))
     },
   });
 
@@ -200,7 +204,7 @@ const CreateRestaurantForm = () => {
               <TextField
                 fullWidth
                 id="stateProvince"
-                label="State/Province"
+                label="Division"
                 variant="outlined"
                 name="stateProvince"
                 value={formik.values.stateProvince}

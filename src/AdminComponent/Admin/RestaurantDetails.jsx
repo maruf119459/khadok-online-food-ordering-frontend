@@ -1,29 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Grid, Card, CardHeader, CardContent } from "@mui/material";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { Facebook, Twitter, YouTube } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRestaurantStatus } from "../../component/State/Restaurant/Action";
 const RestaurantDetails = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const dispatch = useDispatch();
+  const { restaurant } = useSelector((store) => store);
 
   const handleRestaurantStatus = () => {
-    setIsOpen(!isOpen);
+    dispatch(updateRestaurantStatus({
+      restaurantId:restaurant.usersRestaurant.id,
+      jwt:localStorage.getItem("jwt")
+    })) 
   };
+
+
 
   return (
     <div className="lg:px-20 px-5 py-10">
       {/* Header Section */}
       <div className="py-5 flex justify-center items-center gap-5">
         <h1 className="text-2xl lg:text-7xl text-center font-bold">
-          Indian Fast Food
+          {restaurant.usersRestaurant?.name}
         </h1>
         <div>
           <Button
-            color={isOpen ? "error" : "primary"}
+            color={restaurant.usersRestaurant?.open ? "error" : "primary"}
             variant="contained"
             onClick={handleRestaurantStatus}
             size="large"
           >
-            {isOpen ? "Close" : "Open"}
+            {restaurant.usersRestaurant?.open ? "Close" : "Open"}
           </Button>
         </div>
       </div>
@@ -38,24 +46,24 @@ const RestaurantDetails = () => {
               <div className="space-y-4">
                 <div className="flex">
                   <p className="w-48">Owner</p>
-                  <p className="text-[#EC7755]">- Raam</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.owner.fullName}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Restaurant Name</p>
-                  <p className="text-[#EC7755]">- Indian Fast Food</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.name}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Cuisine Type</p>
-                  <p className="text-[#EC7755]">- Indian</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.cuisineType}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Opening Hours</p>
-                  <p className="text-[#EC7755]">- Mon-Sun: 9:00 AM - 9:00 PM</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.openingHours}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Status</p>
-                  <p className={`text-gray-400 ${isOpen ? "text-green-400" : "text-red-400"}`}>
-                    - {isOpen ? "Open" : "Closed"}
+                  <p className={`${restaurant.usersRestaurant?.open ?   "text-green-400" :"text-red-600" }`}>
+                    - {restaurant.usersRestaurant?.open ? "Open" : "Closed"}
                   </p>
                 </div>
               </div>
@@ -98,11 +106,11 @@ const RestaurantDetails = () => {
               <div className="space-y-4">
                 <div className="flex">
                   <p className="w-48">Email</p>
-                  <p className="text-[#EC7755]">- codewithzosh@gmail.com</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.contactInformation?.email}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Mobile</p>
-                  <p className="text-[#EC7755]">- +91903344783</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.contactInformation?.mobile}</p>
                 </div>
                 <div className="flex items-center">
                   <p className="w-48">Social</p>

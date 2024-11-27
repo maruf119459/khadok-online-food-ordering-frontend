@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import CreateIcon from "@mui/icons-material/Create";
 import CreateFoodCategoryForm from "./CreateFoodCategoryForm"; // Ensure the import path is correct
+import { useDispatch, useSelector } from "react-redux";
+import { getRestaurantsCategory } from "../../component/State/Restaurant/Action";
 
 const orders = [
   {
@@ -51,10 +53,19 @@ const modalStyle = {
 };
 
 const FoodCategoryTable = () => {
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt")
+
+  const { restaurant } = useSelector((store) => store);
+
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  useEffect(() => {
+    dispatch(getRestaurantsCategory({ jwt, restaurantId: restaurant.usersRestaurant.id }))
+  }, [dispatch, jwt, restaurant.usersRestaurant.id])
 
   return (
     <Box>
@@ -77,15 +88,15 @@ const FoodCategoryTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((row) => (
+              {restaurant.categories.map((item,index) => (
                 <TableRow
-                  key={row.id}
+                  key={index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.id}
+                    {item?.id}
                   </TableCell>
-                  <TableCell align="left">{row.name}</TableCell>
+                  <TableCell align="left">{item.name}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCategoryAction } from '../../component/State/Restaurant/Action';
 
 const CreateFoodCategoryForm = () => {
+  const dispatch = useDispatch();
+  const { restaurant } = useSelector((store) => store);
   const [formData, setFormData] = useState({
     categoryName: "",
     restaurantId: "",
@@ -12,9 +16,10 @@ const CreateFoodCategoryForm = () => {
     const data = {
       name: formData.categoryName,
       restaurantId: {
-        id: 1,
+        id: restaurant.usersRestaurant.id,
       },
     };
+    dispatch(createCategoryAction({reqData:data, jwt:localStorage.getItem("jwt")}))
     console.log(data);
   };
 
@@ -28,7 +33,7 @@ const CreateFoodCategoryForm = () => {
 
   return (
     <div className="p-5">
-      <h1 className=" text-center text-xl pb-10">Create Category</h1>
+      <h1 className=" text-center text-xl pb-10">Create Food Category</h1>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -47,7 +52,7 @@ const CreateFoodCategoryForm = () => {
           fullWidth
           sx={{ mt: 2 }}
         >
-          Submit
+          Create
         </Button>
       </form>
     </div>
