@@ -4,26 +4,25 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createIngredientCategory } from '../../component/State/Ingredients/Action';
+import { createIngredient } from '../../component/State/Ingredients/Action';
 
 const CreateIngredientForm = () => {
     const dispatch = useDispatch();
     const jwt = localStorage.getItem("jwt")
-    const { restaurant } = useSelector((store) => store);
+    const { restaurant,ingredients } = useSelector((store) => store);
 
     const [formData, setFormData] = useState({
         name: "",
-        ingredientCategoryId: "",
+        categoryId: "",
     }); 
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent form from refreshing the page
         const data = {
-            name: formData.categoryName,
-            restaurantId: {
-                id: restaurant.usersRestaurant.id,
-            },
+            ...formData,
+            restaurantId: restaurant.usersRestaurant.id
         };
+        dispatch(createIngredient({data,jwt}))
     };
 
     const handleInputChange = (e) => {
@@ -40,26 +39,28 @@ const CreateIngredientForm = () => {
             <form onSubmit={handleSubmit}>
                 <TextField
                     fullWidth
-                    id="categoryName"
-                    name="categoryName"
-                    label="Category Name"
+                    id="name"
+                    name="name"
+                    label="Ingredient Name"
                     variant="outlined"
                     onChange={handleInputChange}
-                    value={formData.categoryName}
+                    value={formData.name}
                     margin="normal"
                 />
                 <FormControl fullWidth>
-                    <InputLabel id="seasonal">Is Seasional</InputLabel>
+                    <InputLabel id="category">Category</InputLabel>
                     <Select
-                        labelId="seasonal"
-                        id="seasonal"
-                        value={formData.ingredientCategoryId}
+                        labelId="category"
+                        id="category"
+                        value={formData.categoryId}
                         onChange={handleInputChange}
-                        name="ingredientCategoryId" // Fixed syntax for `name` prop
-                        label="Seasonal"
+                        name="categoryId" // Fixed syntax for `name` prop
+                        label="category"
                     >
-                        <MenuItem value={true}>Yes</MenuItem>
-                        <MenuItem value={false}>No</MenuItem>
+                        {
+                            ingredients?.category.map((item,index)=> <MenuItem key={index} value={item.id}>{item.name}</MenuItem>)
+                        }
+                       
                     </Select>
                 </FormControl>
                 <Button
@@ -69,7 +70,7 @@ const CreateIngredientForm = () => {
                     fullWidth
                     sx={{ mt: 2 }}
                 >
-                    Submit
+                    Create
                 </Button>
             </form>
         </div>

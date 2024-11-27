@@ -18,12 +18,7 @@ import CreateIngredientCategoryForm from "./CreateIngredientCategoryForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngredientCategory } from "../../component/State/Ingredients/Action";
 
-const categories = [
-    { id: 1, name: "Vegetables" },
-    { id: 2, name: "Dairy" },
-    { id: 3, name: "Meat" },
-    // Add more categories if needed
-];
+
 const modalStyle = {
     position: "absolute",
     top: "50%",
