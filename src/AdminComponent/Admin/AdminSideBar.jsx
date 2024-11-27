@@ -8,8 +8,9 @@ import { Divider, Drawer, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../component/State/Authentication/Action";
-
+import HomeIcon from '@mui/icons-material/Home';
 const menu = [
+    { title: "Home", icon: <HomeIcon />, path: "/" },
     { title: "Dashboard", icon: <Dashboard />, path: "/" },
     { title: "Orders", icon: <ShoppingBag />, path: "/orders" },
     { title: "Menu", icon: <ShopTwoIcon />, path: "/menu" },
@@ -29,7 +30,11 @@ const AdminSideBar = ({ handleClose }) => {
             navigate("/");
             dispatch(logout());
             handleClose();
-        } else {
+        } 
+        else if(item.title === "Home"){
+            navigate("/");
+        }
+        else {
             navigate(`/admin/restaurants${item.path}`);
         }
     };

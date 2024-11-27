@@ -37,7 +37,7 @@ const Navbar = () => {
 
                 </div>
 
-                <div className=''>
+               { !auth.user?.role === "ROLE_CUSTOMER"?<div className=''>
                     <IconButton onClick={()=>navigate("/cart")}>
                         <Badge sx={{
                             "& .MuiBadge-badge": {
@@ -48,7 +48,7 @@ const Navbar = () => {
                             <ShoppingCartIcon sx={{ fontSize: "1.5rem", color: "#000000" }} />
                         </Badge>
                     </IconButton>
-                </div>
+                </div>:<></>}
                 <div className=''>
                     {auth.user ? <Avatar onClick={handleAvatarClick} sx={{ bgcolor: "#EF7C5D", color: "#FFD1B2" }}> {auth.user?.fullName[0].toUpperCase()}</Avatar> : <IconButton onClick={() => navigate("/account/login")}><LoginIcon /></IconButton>}
 

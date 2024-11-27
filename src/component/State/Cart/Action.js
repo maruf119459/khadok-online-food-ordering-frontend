@@ -38,21 +38,38 @@ export const getAllCartItems = (reqData) => {
 export const addItemToCart = (reqData) => {
     return async (dispatch) => {
         dispatch({ type: ADD_ITEM_TO_CART_REQUEST });
+
         try {
-            const { data } = await api.put('/api/cart/add', reqData.cartItem, {
-                headers: {
-                    Authorization: `Bearer ${reqData.token}`,
-                },
-            });
+            // Validate input data
+            if (!reqData?.cartItem || !reqData?.token) {
+                throw new Error("Invalid request data: cartItem or token is missing.");
+            }
+
+            const { data } = await api.put(
+                '/api/cart/add', 
+                reqData.cartItem, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${reqData.token}`,
+                    },
+                }
+            );
+
             console.log("Item added to cart:", data);
             dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data });
 
         } catch (error) {
-            console.log("Error adding item to cart:", error);
-            dispatch({ type: ADD_ITEM_TO_CART_FAILURE, payload: error.message });
+            // Log more detailed error info
+            console.error("Error adding item to cart:", error?.response?.data || error.message);
+
+            dispatch({
+                type: ADD_ITEM_TO_CART_FAILURE,
+                payload: error?.response?.data?.message || error.message,
+            });
         }
     };
 };
+
 
 export const updateCartItem = (reqData) => {
     return async (dispatch) => {

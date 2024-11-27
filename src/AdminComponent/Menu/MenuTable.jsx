@@ -1,6 +1,6 @@
 
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Card,
@@ -13,10 +13,13 @@ import {
     TableRow,
     Paper,
     IconButton,
+    Chip,
 } from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import { Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteFoodAction, getMenuItemsByRestaurantId } from "../../component/State/Menu/Action";
 const orders = [
     {
         id: 1,
@@ -40,12 +43,34 @@ const orders = [
 ];
 
 const MenuTable = () => {
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt");
+    const { restaurant, ingredients, menu } = useSelector((store) => store);
+
+    useEffect(() => {
+
+        if (jwt && restaurant?.usersRestaurant?.id) {
+            dispatch(
+                getMenuItemsByRestaurantId({
+                    jwt,
+                    restaurantId: restaurant.usersRestaurant.id,
+                    vegetarian: false,
+                    nonveg: false,
+                    seasonal: false,
+                    foodCategory: "",
+                })
+            );
+        }
+    }, [dispatch, restaurant?.usersRestaurant?.id, jwt]);
     const naviage = useNavigate();
+    const handleDeleteFood=(foodId)=>{
+        dispatch(deleteFoodAction({foodId,jwt}))
+    }
     return (
         <Box>
             <Card className="mt-1">
                 <CardHeader action={
-                    <IconButton onClick={()=>naviage("/admin/restaurants/add-menu")} aria-label="settings">
+                    <IconButton onClick={() => naviage("/admin/restaurants/add-menu")} aria-label="settings">
                         <CreateIcon />
                     </IconButton>
                 }
@@ -65,25 +90,31 @@ const MenuTable = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {orders.map((row) => (
+                            {menu?.menuItems?.map((item) => (
                                 <TableRow
-                                    key={row.id}
+                                    key={item.id}
                                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                                 >
-                                    <TableCell component="th" scope="row">
-                                        {row.id}
-                                    </TableCell>
+
                                     <TableCell align="right">
                                         <img
-                                            src={row.image}
-                                            alt={row.name}
+                                            src={item.images[0]}
+                                            alt={item.name}
                                             style={{ width: "50px", height: "50px" }}
                                         />
                                     </TableCell>
-                                    <TableCell align="right">{row.customer}</TableCell>
-                                    <TableCell align="right">{row.price}</TableCell>
-                                    <TableCell align="right">{row.name}</TableCell>
-                                    <TableCell align="right"><IconButton><Delete/></IconButton></TableCell>
+                                    <TableCell align="right">{item.name}</TableCell>
+                                    <TableCell align="right">
+                                        {item.ingredients.map((ingredient, index) => (
+                                            <Chip
+                                                key={index}
+                                                label={typeof ingredient === "string" ? ingredient : ingredient.name}
+                                            />
+                                        ))}
+                                    </TableCell>
+                                    <TableCell align="right">{item.price}</TableCell>
+                                    <TableCell align="right">{item.available?"In Stock":"Out Of Stock"}</TableCell>
+                                    <TableCell align="right"><IconButton color="error" onClick={()=>handleDeleteFood(item.id)}><Delete /></IconButton></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
