@@ -18,27 +18,6 @@ import CreateFoodCategoryForm from "./CreateFoodCategoryForm"; // Ensure the imp
 import { useDispatch, useSelector } from "react-redux";
 import { getRestaurantsCategory } from "../../component/State/Restaurant/Action";
 
-const orders = [
-  {
-    id: 1,
-    image: "https://via.placeholder.com/50",
-    customer: "John Doe",
-    price: "$15.00",
-    name: "Pizza",
-    ingredients: "Cheese, Tomato, Basil",
-    status: "Completed",
-  },
-  {
-    id: 2,
-    image: "https://via.placeholder.com/50",
-    customer: "Jane Smith",
-    price: "$12.00",
-    name: "Burger",
-    ingredients: "Beef, Lettuce, Cheese",
-    status: "Pending",
-  },
-  // Add more orders as needed
-];
 
 const modalStyle = {
   position: "absolute",

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Card,
@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import CreateIngredientCategoryForm from "./CreateIngredientCategoryForm";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredientCategory } from "../../component/State/Ingredients/Action";
 
 const categories = [
     { id: 1, name: "Vegetables" },
@@ -34,10 +36,16 @@ const modalStyle = {
     p: 4,
 };
 const IngredientCategoryTable = () => {
+    const jwt=localStorage.getItem("jwt")
     const [open, setOpen] = useState(false);
-
+    const dispatch = useDispatch();
+    const { restaurant,ingredients } = useSelector((store) => store);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    useEffect(()=>{
+        dispatch(getIngredientCategory({id:restaurant.usersRestaurant.id , jwt}))
+    },[dispatch,restaurant.usersRestaurant.id,jwt])
     return (
         <Box>
             <Card className="mt-1">
@@ -59,7 +67,7 @@ const IngredientCategoryTable = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {categories.map((category) => (
+                            {ingredients?.category.map((category) => (
                                 <TableRow
                                     key={category.id}
                                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

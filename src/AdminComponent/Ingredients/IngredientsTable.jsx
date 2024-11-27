@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import CreateIcon from '@mui/icons-material/Create';
 import CreateIngredientForm from "./CreateIngredientForm";
+import { useDispatch, useSelector } from "react-redux";
 
 const ingredients = [
     { id: 1, name: "Tomato", category: "Vegetables", availability: "Available" },
@@ -34,6 +35,11 @@ const modalStyle = {
     p: 4,
 };
 const IngredientsTable = () => {
+    const dispatch=useDispatch();
+    const jwt=localStorage.getItem("jwt");
+    const {restaurant}=useSelector(store=>store)
+
+
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => setOpen(true);

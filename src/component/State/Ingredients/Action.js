@@ -1,4 +1,5 @@
 
+import { api } from "../../config/api";
 import {
     CREATE_INGREDIENT_CATEGORY_FAILURE,
     CREATE_INGREDIENT_CATEGORY_SUCCESS,
@@ -9,7 +10,6 @@ import {
     GET_INGREDIENT_CATEGORY_SUCCESS,
     UPDATE_STOCK,
 } from "./ActionType";
-import { api } from "../../../config/api";
 
 export const getIngredientsOfRestaurant = ({ id, jwt }) => {
     return async (dispatch) => {

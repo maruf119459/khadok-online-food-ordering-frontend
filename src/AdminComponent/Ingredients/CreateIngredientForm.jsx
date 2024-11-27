@@ -3,22 +3,27 @@
 
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { createIngredientCategory } from '../../component/State/Ingredients/Action';
 
 const CreateIngredientForm = () => {
+    const dispatch = useDispatch();
+    const jwt = localStorage.getItem("jwt")
+    const { restaurant } = useSelector((store) => store);
+
     const [formData, setFormData] = useState({
         name: "",
         ingredientCategoryId: "",
-    });
+    }); 
 
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent form from refreshing the page
         const data = {
             name: formData.categoryName,
             restaurantId: {
-                id: 1,
+                id: restaurant.usersRestaurant.id,
             },
         };
-        console.log(data);
     };
 
     const handleInputChange = (e) => {
