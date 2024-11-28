@@ -1,12 +1,12 @@
 import { Box, Button, Card, Divider, Modal, TextField, Grid } from '@mui/material';
 import React, { useState } from 'react';
 import CartItem from './CartItem';
-import AddressCart from './AddressCart';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from "yup";
 import { useDispatch, useSelector } from 'react-redux';
 import { createOrder } from '../State/Order/Action';
 import locationImg from '../../assetes/locationImg.png'
+import { removeCartItem } from '../State/Cart/Action';
 
 export const style = {
     position: 'absolute',
@@ -45,31 +45,41 @@ const Cart = () => {
     const { cart, auth } = useSelector(store => store)
 
     const handleClose = () => setOpen(false);
-
     const handleSubmit = (values) => {
+        const jwt =  localStorage.getItem("jwt");
         const data = {
-            jwt: localStorage.getItem("jwt"),
+            jwt: jwt,
             order: {
-                restaurantId: cart.cartItems[0]?.food?.restaurant.id,
+                restaurantId: cart.cart?.item[0]?.food?.name.split('-')[1],
                 deliveryAddress: {
                     fullName: auth.user?.fullName,
                     streetAddress: values.streetAddress,
                     city: values.city,
-                    division: values.state,
-                    postalCode: values.pincode,
+                    division: values.division,
+                    postalCode: values.postalcode,
                     country: "Bangladesh"
                 }
             }
         };
+        console.log(data)
         dispatch(createOrder(data))
+        cart?.cart?.item?.forEach((item)=> {
+            if (item?.id) {
+                dispatch(removeCartItem({ cartItemId: item.id, jwt: auth.jwt || jwt }));
+            } else {
+                console.error("Invalid cart item:", item);
+            }
+        });
+        
+
     };
 
-    console.log("cart page", cart)
+    console.log("cart page", cart.cart)
     return (
         <div>
             <main className='lg:flex justify-between'>
                 <section className='lg:w-[30%] space-y-6 lg:min-h-screen pt-10'>
-                    {cart.cart?.item.map((item, index) => <CartItem key={index} item={item} />)}
+                    {cart?.cart?.item?.map((item, index) => <CartItem key={index} item={item} />)}
                     <Divider />
                     <div className='billDetails px-5 text-sm'>
                         <p className='font-extralight py-5'>Bill Details</p>
@@ -122,155 +132,153 @@ const Cart = () => {
             </main>
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                 <Box sx={style}>
-                    <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
-                        {({ handleSubmit }) => (
-                            <Form onSubmit={handleSubmit}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                        <Field
-                                            as={TextField}
-                                            name="streetAddress"
-                                            label="Street Address"
-                                            fullWidth
-                                            variant="outlined"
-                                            sx={{
-                                                "& .MuiOutlinedInput-root": {
-                                                    "& fieldset": {
-                                                        borderColor: "black" // Default border color
-                                                    },
-                                                    "&:hover fieldset": {
-                                                        borderColor: "black" // Hover border color
-                                                    },
-                                                    "&.Mui-focused fieldset": {
-                                                        borderColor: "black" // Focused border color
-                                                    }
-                                                },
-                                                "& .MuiInputBase-input": {
-                                                    color: "black" // Text color inside the input
-                                                },
-                                                "& .MuiInputLabel-root": {
-                                                    color: "black" // Label text color
-                                                },
-                                                "& .MuiFormLabel-root.Mui-focused": {
-                                                    color: "black" // Focused label color
-                                                }
-                                            }}
-
-                                            error={<ErrorMessage name="streetAddress" />}
-                                            helperText={<ErrorMessage name="streetAddress" component="span" className='text-red-500' />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Field
-                                            as={TextField}
-                                            name="division"
-                                            label="Division"
-                                            fullWidth
-                                            variant="outlined"
-                                            sx={{
-                                                "& .MuiOutlinedInput-root": {
-                                                    "& fieldset": {
-                                                        borderColor: "black" // Default border color
-                                                    },
-                                                    "&:hover fieldset": {
-                                                        borderColor: "black" // Hover border color
-                                                    },
-                                                    "&.Mui-focused fieldset": {
-                                                        borderColor: "black" // Focused border color
-                                                    }
-                                                },
-                                                "& .MuiInputBase-input": {
-                                                    color: "black" // Text color inside the input
-                                                },
-                                                "& .MuiInputLabel-root": {
-                                                    color: "black" // Label text color
-                                                },
-                                                "& .MuiFormLabel-root.Mui-focused": {
-                                                    color: "black" // Focused label color
-                                                }
-                                            }}
-
-                                            error={<ErrorMessage name="division" />}
-                                            helperText={<ErrorMessage name="division" component="span" className='text-red-500' />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Field
-                                            as={TextField}
-                                            name="postalcode"
-                                            label="Postal Code"
-                                            fullWidth
-                                            variant="outlined"
-                                            sx={{
-                                                "& .MuiOutlinedInput-root": {
-                                                    "& fieldset": {
-                                                        borderColor: "black" // Default border color
-                                                    },
-                                                    "&:hover fieldset": {
-                                                        borderColor: "black" // Hover border color
-                                                    },
-                                                    "&.Mui-focused fieldset": {
-                                                        borderColor: "black" // Focused border color
-                                                    }
-                                                },
-                                                "& .MuiInputBase-input": {
-                                                    color: "black" // Text color inside the input
-                                                },
-                                                "& .MuiInputLabel-root": {
-                                                    color: "black" // Label text color
-                                                },
-                                                "& .MuiFormLabel-root.Mui-focused": {
-                                                    color: "black" // Focused label color
-                                                }
-                                            }}
-
-                                            error={<ErrorMessage name="postalcode" />}
-                                            helperText={<ErrorMessage name="postalcode" component="span" className='text-red-500' />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Field
-                                            as={TextField}
-                                            name="city"
-                                            label="City"
-                                            fullWidth
-                                            variant="outlined"
-                                            sx={{
-                                                "& .MuiOutlinedInput-root": {
-                                                    "& fieldset": {
-                                                        borderColor: "black" // Default border color
-                                                    },
-                                                    "&:hover fieldset": {
-                                                        borderColor: "black" // Hover border color
-                                                    },
-                                                    "&.Mui-focused fieldset": {
-                                                        borderColor: "black" // Focused border color
-                                                    }
-                                                },
-                                                "& .MuiInputBase-input": {
-                                                    color: "black" // Text color inside the input
-                                                },
-                                                "& .MuiInputLabel-root": {
-                                                    color: "black" // Label text color
-                                                },
-                                                "& .MuiFormLabel-root.Mui-focused": {
-                                                    color: "black" // Focused label color
-                                                }
-                                            }}
-
-                                            error={<ErrorMessage name="city" />}
-                                            helperText={<ErrorMessage name="city" component="span" className='text-red-500' />}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <Button type="submit" variant="contained" fullWidth>
-                                            Submit
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Form>
-                        )}
-                    </Formik>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+    {({ errors, touched, handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Field
+                        as={TextField}
+                        id="streetAddress"
+                        name="streetAddress"
+                        label="Street Address"
+                        fullWidth
+                        variant="outlined"
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": {
+                                    borderColor: "black" // Default border color
+                                },
+                                "&:hover fieldset": {
+                                    borderColor: "black" // Hover border color
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "black" // Focused border color
+                                }
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "black" // Text color inside the input
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "black" // Label text color
+                            },
+                            "& .MuiFormLabel-root.Mui-focused": {
+                                color: "black" // Focused label color
+                            }
+                        }}
+                        error={touched.streetAddress && Boolean(errors.streetAddress)}
+                        helperText={touched.streetAddress && errors.streetAddress}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Field
+                        as={TextField}
+                        name="division"
+                        label="Division"
+                        id="division"
+                        fullWidth
+                        variant="outlined"
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": {
+                                    borderColor: "black" // Default border color
+                                },
+                                "&:hover fieldset": {
+                                    borderColor: "black" // Hover border color
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "black" // Focused border color
+                                }
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "black" // Text color inside the input
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "black" // Label text color
+                            },
+                            "& .MuiFormLabel-root.Mui-focused": {
+                                color: "black" // Focused label color
+                            }
+                        }}
+                        error={touched.division && Boolean(errors.division)}
+                        helperText={touched.division && errors.division}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Field
+                        as={TextField}
+                        name="postalcode"
+                        label="Postal Code"
+                        fullWidth
+                        variant="outlined"
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": {
+                                    borderColor: "black" // Default border color
+                                },
+                                "&:hover fieldset": {
+                                    borderColor: "black" // Hover border color
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "black" // Focused border color
+                                }
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "black" // Text color inside the input
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "black" // Label text color
+                            },
+                            "& .MuiFormLabel-root.Mui-focused": {
+                                color: "black" // Focused label color
+                            }
+                        }}
+                        error={touched.postalcode && Boolean(errors.postalcode)}
+                        helperText={touched.postalcode && errors.postalcode}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Field
+                        as={TextField}
+                        name="city"
+                        label="City"
+                        fullWidth
+                        variant="outlined"
+                        sx={{
+                            "& .MuiOutlinedInput-root": {
+                                "& fieldset": {
+                                    borderColor: "black" // Default border color
+                                },
+                                "&:hover fieldset": {
+                                    borderColor: "black" // Hover border color
+                                },
+                                "&.Mui-focused fieldset": {
+                                    borderColor: "black" // Focused border color
+                                }
+                            },
+                            "& .MuiInputBase-input": {
+                                color: "black" // Text color inside the input
+                            },
+                            "& .MuiInputLabel-root": {
+                                color: "black" // Label text color
+                            },
+                            "& .MuiFormLabel-root.Mui-focused": {
+                                color: "black" // Focused label color
+                            }
+                        }}
+                        error={touched.city && Boolean(errors.city)}
+                        helperText={touched.city && errors.city}
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <Button type="submit" variant="contained" fullWidth>
+                        Submit
+                    </Button>
+                </Grid>
+            </Grid>
+        </Form>
+    )}
+</Formik>
                 </Box>
             </Modal>
         </div>

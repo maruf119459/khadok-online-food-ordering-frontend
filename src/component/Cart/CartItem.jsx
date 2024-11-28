@@ -31,7 +31,7 @@ const CartItem = ({item}) => {
             </div>
             <div className='flex items-center justify-between lg:w-[70%]'>
                 <div className='space-y-1 lg:space-y-3 w-full'>
-                    <p>{item?.food?.name}</p>
+                    <p>{item?.food?.name.split('-')[0]}</p>
                     <div className='flex justify-center items-center'>
                         <div className='flex items-center space-x-1'>
                             <IconButton onClick={()=>setQuantity(quantity-1)}>

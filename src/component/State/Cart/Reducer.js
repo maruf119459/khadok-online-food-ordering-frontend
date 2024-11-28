@@ -38,7 +38,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                cartItems: state.cartItems.map((item) =>
+                cartItems: state.cartItems?.map((item) =>
                     item.id === action.payload.id ? action.payload : item
                 ),
             };
@@ -46,7 +46,7 @@ const cartReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                cartItems: state.cartItems.filter((item) =>
+                cartItems: state.cartItems?.filter((item) =>
                     item.id !== action.payload
                 ),
             };

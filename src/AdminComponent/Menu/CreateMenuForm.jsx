@@ -34,8 +34,9 @@ const CreateMenuForm = () => {
         initialValues,
         onSubmit: (values) => {
             values.restaurantId = restaurant.usersRestaurant.id;
+            const updatedName = `${values.name}-${restaurant.usersRestaurant.id}`;
+            values.name = updatedName;
             dispatch(createMenuItem({menu:values,jwt}))
-            console.log(values);
         },
     });
 

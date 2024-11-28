@@ -77,6 +77,7 @@ const OrderTable = () => {
     dispatch(updateOrderStatus({orderId,orderStatus,jwt}))
     handleClose();
   }
+  console.log(restaurantOrder.orders)
   return (
     <Box>
       <Card className="mt-1">
@@ -116,9 +117,9 @@ const OrderTable = () => {
 
                   </TableCell>
                   <TableCell align="right">{order.customer?.fullName}</TableCell>
-                  <TableCell align="right">{order.totalAmount}</TableCell>
+                  <TableCell align="right">{order.totalPrice+5+21}</TableCell>
                   <TableCell align="right">{order.items.map((orderItem, index) => <p key={index}>
-                    {orderItem.food?.name}
+                    {orderItem.food?.name.split('-')[0]}
                   </p>)}</TableCell>
                   <TableCell align="right">
                     {order.items.map((orderItem, index) => (

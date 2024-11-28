@@ -3,6 +3,7 @@ import { CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, GET_U
 
 
 export const createOrder = (reqData) => {
+    console.log(reqData)
     return async (dispatch) => {
         dispatch({ type: CREATE_ORDER_REQUEST });
         try {
@@ -11,9 +12,9 @@ export const createOrder = (reqData) => {
                     Authorization: `Bearer ${reqData.jwt}`,
                 },
             });
-            // if (data.payment_url) {
-            //     window.location.href = data.payment_url;
-            // }
+            if (data.payment_url) {
+                window.location.href = data.payment_url;
+            }
             console.log("Created order data:", data);
             dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
         } catch (error) {

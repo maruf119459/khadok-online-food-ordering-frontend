@@ -53,7 +53,7 @@ const MenuCard = ({item}) => {
                         <img className='w-[7rem] h-[7rem] object-cover' src={item.images[0]} alt={item.name}></img>
                     </div>
                     <div className='space-y-1 lg:space-y-5 lg:max-w-2xl'>
-                        <p className='font-semibold text-xl'>{item.name}</p>
+                        <p className='font-semibold text-xl'>{item.name.split('-')[0]}</p>
                         <p>৳ {item.price}</p>
                         <p className=''>{item.description}</p>
 
