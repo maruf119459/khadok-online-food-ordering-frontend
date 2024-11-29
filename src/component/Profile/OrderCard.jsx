@@ -3,7 +3,7 @@ import React from 'react';
 
 const OrderCard = ({item,order}) => {
     return (
-        <Card className='flex justify-between items-center p-5'>
+        <Card sx={{background:"#FFF2E9"}} className='mb-3  flex justify-between items-center p-5'>
             <div className='flex items-center space-x-5'>
                 <img className='h-16 w-16' src={item?.food?.images[0]} alt='foodImage'></img>
                 <div>
@@ -12,7 +12,7 @@ const OrderCard = ({item,order}) => {
                 </div>
             </div>
             <div>
-                <Button className='cursor-not-allowed'>{order.orderStatus}</Button>
+                <Button sx={{color:"#EC7755"}} className='cursor-not-allowed'>{order.orderStatus}</Button>
             </div>
         </Card>
     );

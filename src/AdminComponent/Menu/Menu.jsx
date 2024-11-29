@@ -6,7 +6,7 @@ const Menu = () => {
     
     
     return (
-        <div className='px-2'>
+        <div className='px-5'>
             <MenuTable/>
         </div>
     );

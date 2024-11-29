@@ -3,7 +3,7 @@ import FoodCategoryTable from './FoodCategoryTable';
 
 const FoodCategory = () => {
     return (
-        <div className='px-2'>
+        <div className='px-5 mt-8'>
             <FoodCategoryTable/>
         </div>
     );

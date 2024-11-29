@@ -45,7 +45,7 @@ const RegisterForm = () => {
             </Formik>
             <Typography variant='body2' align='center' sx={{ mt: 2 }}>
                 If have an account already?
-                <Button onClick={() => navigate("/account/login")}>
+                <Button sx={{color:"#EC7755"}} onClick={() => navigate("/account/login")}>
                     login
                 </Button>
             </Typography>

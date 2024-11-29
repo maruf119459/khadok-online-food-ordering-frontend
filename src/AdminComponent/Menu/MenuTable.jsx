@@ -20,6 +20,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFoodAction, getMenuItemsByRestaurantId } from "../../component/State/Menu/Action";
 
+
 const MenuTable = () => {
     const dispatch = useDispatch();
     const jwt = localStorage.getItem("jwt");
@@ -71,17 +72,18 @@ const MenuTable = () => {
 
     return (
         <Box>
-            <Card className="mt-1">
+            <Card   sx={{background:"#EC7755"}}  className="mt-8">
                 <CardHeader
+                    
                     action={
-                        <IconButton onClick={() => navigate("/admin/restaurants/add-menu")} aria-label="settings">
+                        <IconButton sx={{ color:"#FFFF" }} onClick={() => navigate("/admin/restaurants/add-menu")} aria-label="settings">
                             <CreateIcon />
                         </IconButton>
                     }
                     title="Menu"
-                    sx={{ pt: 2, alignItems: "center" }}
+                    sx={{ pt: 2, alignItems: "center", color:"#FFFF" }}
                 />
-                <TableContainer component={Paper}>
+                <TableContainer   sx={{background:"#FFF2E9"}} component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="order table">
                         <TableHead>
                             <TableRow>

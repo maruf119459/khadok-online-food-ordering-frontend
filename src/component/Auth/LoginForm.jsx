@@ -30,7 +30,7 @@ const LoginForm = () => {
             </Formik>
             <Typography variant='body2' align='center' sx={{mt:2}}>
                 Don't have an account
-                <Button onClick={()=>navigate("/account/register")}>
+                <Button sx={{color:"#EC7755"}} onClick={()=>navigate("/account/register")}>
                     register
                 </Button>
             </Typography>

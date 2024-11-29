@@ -1,19 +1,17 @@
 import React from 'react';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import HomeIcon from '@mui/icons-material/Home';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { Divider, Drawer, useMediaQuery } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '../State/Authentication/Action';
+import HistoryIcon from '@mui/icons-material/History';
 const menu = [
     {title:"Orders", icon:<LocalMallIcon/>},
     {title:"Favorites", icon:<FavoriteIcon/>},
-    {title:"Address", icon:<HomeIcon/>},
-    {title:"Payments", icon:<AccountBalanceWalletIcon/>},
+    {title:"Payments History", icon:<HistoryIcon/>},
     {title:"Notifications", icon:<NotificationsIcon/>},
     {title:"Logout", icon:<LogoutIcon/>},
     
@@ -27,6 +25,9 @@ const ProfileNavication = ({open, handleClose}) => {
         if(item.title === 'Logout'){
             dispatch(logout());
             navigate("/");
+        }
+        else if(item.title === 'Payments History'){
+            navigate(`/my-profile/paymentes/history`)
         }
         else
         navigate(`/my-profile/${item.title.toLowerCase()}`)

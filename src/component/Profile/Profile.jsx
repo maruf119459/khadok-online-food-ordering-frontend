@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ProfileNavication from './ProfileNavication';
-import { Divider } from '@mui/material';
 import { Route, Routes } from 'react-router-dom';
 import UserProfile from './UserProfile';
 import Orders from './Orders';
@@ -22,8 +21,8 @@ const Profile = () => {
     <Route path='/orders' element={<Orders/>}> </Route>
     <Route path='/address' element={<Address/>}> </Route>
     <Route path='/favorites' element={<Favorites/>}> </Route>
-    <Route path='/notification' element={<Notification/>}> </Route>
-    <Route path='/paymentes' element={<Paymentes/>}> </Route>
+    <Route path='/notifications' element={<Notification/>}> </Route>
+    <Route path='/paymentes/history' element={<Paymentes/>}> </Route>
 </Routes>
             </div>
             

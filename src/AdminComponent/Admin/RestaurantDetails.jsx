@@ -4,6 +4,8 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { Facebook, Twitter, YouTube } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { updateRestaurantStatus } from "../../component/State/Restaurant/Action";
+const facebook = `https://www.facebook.com/`;
+const youtube=`https://www.youtube.com/watch?v=pVwhdzYaUwU&list=RDGMEMPipJmhsMq3GHGrfqf4WIqA&index=13`
 const RestaurantDetails = () => {
   const dispatch = useDispatch();
   const { restaurant } = useSelector((store) => store);
@@ -15,6 +17,7 @@ const RestaurantDetails = () => {
     })) 
   };
 
+  console.log("ADDRESS ", restaurant)
 
 
   return (
@@ -79,19 +82,19 @@ const RestaurantDetails = () => {
               <div className="space-y-4">
                 <div className="flex">
                   <p className="w-48">Country</p>
-                  <p className="text-[#EC7755]">- India</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.address?.country || "Bangladesh"}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">City</p>
-                  <p className="text-[#EC7755]">- Bangalore</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.address?.city || "Dhaka"}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Postal Code</p>
-                  <p className="text-[#EC7755]">- 530068</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.address?.postalCode || "1202"}</p>
                 </div>
                 <div className="flex">
                   <p className="w-48">Street Address</p>
-                  <p className="text-[#EC7755]">- Ambavadi Choke</p>
+                  <p className="text-[#EC7755]">- {restaurant.usersRestaurant?.address?.streetAddress || "New Elephant Road"}</p>
                 </div>
               </div>
             </CardContent>
@@ -115,10 +118,11 @@ const RestaurantDetails = () => {
                 <div className="flex items-center">
                   <p className="w-48">Social</p>
                   <div className="flex gap-4 text-[#EC7755]">
-                    <i><InstagramIcon></InstagramIcon></i>
-                    <i><Twitter/></i>
-                    <i ><YouTube/></i>
-                    <i><Facebook/></i>
+                    <i><a href={restaurant.usersRestaurant?.contactInformation?.instagram}><InstagramIcon/></a></i>
+                    <i><a href={restaurant.usersRestaurant?.contactInformation?.twitter}><Twitter/></a></i>
+                    <i><a href={youtube}><YouTube/></a></i>
+                    <i><a href={facebook}><Facebook/></a></i>
+                  
                   </div>
                 </div>
               </div>

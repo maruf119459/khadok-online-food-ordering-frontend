@@ -5,7 +5,7 @@ import IngredientCategoryTable from './IngredientCategoryTable';
 
 const Ingredients = () => {
     return (
-        <div className='px-5 mt-4'>
+        <div className='px-5 mt-8'>
             <Grid container spacing={2}>
                 <Grid item xs={12} lg={8}>
                     <IngredientsTable />

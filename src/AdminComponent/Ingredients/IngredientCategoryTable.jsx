@@ -43,17 +43,17 @@ const IngredientCategoryTable = () => {
     },[dispatch,restaurant.usersRestaurant.id,jwt])
     return (
         <Box>
-            <Card className="mt-1">
+            <Card sx={{background:"#EC7755"}} className="mt-1">
                 <CardHeader
                     action={
-                        <IconButton onClick={handleOpen} aria-label="settings">
+                        <IconButton sx={{color:"#FFFF"}} onClick={handleOpen} aria-label="settings">
                             <CreateIcon />
                         </IconButton>
                     }
                     title="Ingredient Category"
-                    sx={{ pt: 2, alignItems: "center" }}
+                    sx={{ pt: 2, alignItems: "center",color:"#FFFF" }}
                 />
-                <TableContainer component={Paper}>
+                <TableContainer sx={{background:"#FFF2E9"}} component={Paper}>
                     <Table aria-label="category table">
                         <TableHead>
                             <TableRow>

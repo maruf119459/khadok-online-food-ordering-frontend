@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Card,
@@ -17,76 +17,72 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchRestaurantsOrder, updateOrderStatus } from "../../component/State/RestaurantOrder/Action";
-
-const orders = [
-  {
-    id: 1,
-    image: "https://via.placeholder.com/50",
-    customer: "John Doe",
-    price: "$15.00",
-    name: "Pizza",
-    ingredients: "Cheese, Tomato, Basil",
-    status: "Completed",
-  },
-  {
-    id: 2,
-    image: "https://via.placeholder.com/50",
-    customer: "Jane Smith",
-    price: "$12.00",
-    name: "Burger",
-    ingredients: "Beef, Lettuce, Cheese",
-    status: "Pending",
-  },
-  // Add more orders as needed
-];
 
 const orderStatus = [
   { label: "Pending", value: "PENDING" },
   { label: "Completed", value: "COMPLETED" },
-  { label: "All", value: "ALL" },
+  { label: "Delivered", value: "DELIVERED" },
+];
+
+const dummyOrders = [
+  {
+    id: 1,
+    customer: { fullName: "John Doe" },
+    totalPrice: 50,
+    orderStatus: "PENDING",
+    items: [
+      {
+        food: { name: "Burger-Deluxe", images: ["https://via.placeholder.com/40"] },
+        ingredients: ["Lettuce", "Tomato"],
+      },
+    ],
+  },
+  {
+    id: 2,
+    customer: { fullName: "Jane Smith" },
+    totalPrice: 75,
+    orderStatus: "DELIVERED",
+    items: [
+      {
+        food: { name: "Pizza-Margherita", images: ["https://via.placeholder.com/40"] },
+        ingredients: ["Cheese", "Basil"],
+      },
+    ],
+  },
 ];
 
 const OrderTable = () => {
-  const dispatch = useDispatch();
-  const jwt = localStorage.getItem("jwt");
-  const { restaurant, restaurantOrder } = useSelector((store) => store);
+  const [orders, setOrders] = useState(dummyOrders);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState(null);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event) => {
+
+  const handleClick = (event, orderId) => {
     setAnchorEl(event.currentTarget);
+    setSelectedOrderId(orderId);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
+    setSelectedOrderId(null);
   };
 
-  useEffect(() => {
-    if (jwt && restaurant?.usersRestaurant?.id) {
-      dispatch(
-        fetchRestaurantsOrder({
-          jwt,
-          restaurantId: restaurant.usersRestaurant.id,
-        })
-      );
-    }
-  }, [dispatch, jwt, restaurant?.usersRestaurant?.id]);
-
-  const handleUpdateOrder=(orderId, orderStatus)=>{
-    dispatch(updateOrderStatus({orderId,orderStatus,jwt}))
+  const handleUpdateOrder = (orderId, newStatus) => {
+    setOrders((prevOrders) =>
+      prevOrders.map((order) =>
+        order.id === orderId ? { ...order, orderStatus: newStatus } : order
+      )
+    );
     handleClose();
-  }
-  console.log(restaurantOrder.orders)
+  };
+
   return (
     <Box>
-      <Card className="mt-1">
-        <CardHeader
-          title="All Orders"
-          sx={{ pt: 2, alignItems: "center" }}
-        />
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="order table">
+      <Card sx={{background:"#EC7755"}} className="mt-8 bg-[#FFF2E9] ">
+        <CardHeader title="All Orders" sx={{ pt: 2, alignItems: "center", color:"#FFFF" }} />
+        <TableContainer  sx={{background:"#FFF2E9"}} component={Paper}>
+          <Table sx={{ minWidth: 650,  }} aria-label="order table" >
             <TableHead>
               <TableRow>
                 <TableCell>ID</TableCell>
@@ -100,7 +96,7 @@ const OrderTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {restaurantOrder.orders.map((order) => (
+              {orders.map((order) => (
                 <TableRow
                   key={order.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -110,17 +106,18 @@ const OrderTable = () => {
                   </TableCell>
                   <TableCell align="right">
                     <AvatarGroup>
-                      {
-                        order.items.map((item, index) => <Avatar key={index} src={item.food?.images[0]} />)
-                      }
+                      {order.items.map((item, index) => (
+                        <Avatar key={index} src={item.food?.images[0]} />
+                      ))}
                     </AvatarGroup>
-
                   </TableCell>
                   <TableCell align="right">{order.customer?.fullName}</TableCell>
-                  <TableCell align="right">{order.totalPrice+5+21}</TableCell>
-                  <TableCell align="right">{order.items.map((orderItem, index) => <p key={index}>
-                    {orderItem.food?.name.split('-')[0]}
-                  </p>)}</TableCell>
+                  <TableCell align="right">{order.totalPrice + 5 + 21}</TableCell>
+                  <TableCell align="right">
+                    {order.items.map((orderItem, index) => (
+                      <p key={index}>{orderItem.food?.name.split("-")[0]}</p>
+                    ))}
+                  </TableCell>
                   <TableCell align="right">
                     {order.items.map((orderItem, index) => (
                       <div key={index}>
@@ -130,31 +127,36 @@ const OrderTable = () => {
                       </div>
                     ))}
                   </TableCell>
-
                   <TableCell align="right">{order.orderStatus}</TableCell>
                   <TableCell align="right">
                     <Button
                       id="basic-button"
-                      aria-controls={open ? 'basic-menu' : undefined}
+                      aria-controls={open ? "basic-menu" : undefined}
                       aria-haspopup="true"
-                      aria-expanded={open ? 'true' : undefined}
-                      onClick={handleClick}
+                      aria-expanded={open ? "true" : undefined}
+                      onClick={(event) => handleClick(event, order.id)}
+                      sx={{color:"#EC7755"}}
                     >
                       Update
                     </Button>
                     <Menu
                       id="basic-menu"
                       anchorEl={anchorEl}
-                      open={open}
+                      open={open && selectedOrderId === order.id}
                       onClose={handleClose}
                       MenuListProps={{
-                        'aria-labelledby': 'basic-button',
+                        "aria-labelledby": "basic-button",
                       }}
                     >
-                      {orderStatus.map((status) => (
-                        <MenuItem onClick={()=>handleUpdateOrder(order.id,status.value)}>{status.label}</MenuItem>))}
+                      {orderStatus.map((status, index) => (
+                        <MenuItem
+                          key={index}
+                          onClick={() => handleUpdateOrder(order.id, status.value)}
+                        >
+                          {status.label}
+                        </MenuItem>
+                      ))}
                     </Menu>
-
                   </TableCell>
                 </TableRow>
               ))}
@@ -164,5 +166,6 @@ const OrderTable = () => {
       </Card>
     </Box>
   );
-}
+};
+
 export default OrderTable;

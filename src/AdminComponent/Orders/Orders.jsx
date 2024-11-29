@@ -24,8 +24,8 @@ const Orders = () => {
   };
 
   return (
-    <div className="px-2">
-      <Card className="p-5">
+    <div className="px-5 mt-8">
+      <Card sx={{background:"#EC7755"}} className="p-5">
         <Typography sx={{ paddingBottom: "1rem" }} variant="h5">
           Order Status
         </Typography>

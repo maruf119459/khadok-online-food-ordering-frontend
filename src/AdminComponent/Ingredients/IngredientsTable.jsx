@@ -74,17 +74,17 @@ const IngredientsTable = () => {
 
     return (
         <Box>
-            <Card className="mt-1">
+            <Card sx={{background:"#EC7755"}} className="mt-1">
                 <CardHeader
                     action={
-                        <IconButton onClick={handleOpen} aria-label="settings">
+                        <IconButton sx={{color:"#FFFF"}} onClick={handleOpen} aria-label="settings">
                             <CreateIcon />
                         </IconButton>
                     }
                     title="Ingredients"
-                    sx={{ pt: 2, alignItems: "center" }}
+                    sx={{ pt: 2, alignItems: "center", color:"#FFFF" }}
                 />
-                <TableContainer component={Paper}>
+                <TableContainer sx={{background:"#FFF2E9"}} component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="ingredient table">
                         <TableHead>
                             <TableRow>

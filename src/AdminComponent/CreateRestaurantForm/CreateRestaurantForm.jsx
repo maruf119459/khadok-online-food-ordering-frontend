@@ -19,6 +19,8 @@ const initialValues = {
   mobile: "",
   twitter: "",
   instagram: "",
+  facbook: "",
+  youtube: "",
   openingHours: "Mon-Sun 9:00 AM - 9:00 PM",
   images: [],
 };
@@ -280,6 +282,30 @@ const CreateRestaurantForm = () => {
                 variant="outlined"
                 name="twitter"
                 value={formik.values.twitter}
+                onChange={formik.handleChange}
+                InputLabelProps={{ style: { color: "gray" } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="facbok"
+                label="Facbook"
+                variant="outlined"
+                name="facbook"
+                value={formik.values.facbook}
+                onChange={formik.handleChange}
+                InputLabelProps={{ style: { color: "gray" } }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="youtube"
+                label="YouTube"
+                variant="outlined"
+                name="youtube"
+                value={formik.values.youtube}
                 onChange={formik.handleChange}
                 InputLabelProps={{ style: { color: "gray" } }}
               />

@@ -7,6 +7,8 @@ import Cart from '../component/Cart/Cart';
 import Profile from '../component/Profile/Profile';
 import Auth from '../component/Auth/Auth';
 import PaymentSuccess from '../component/PaymentSuccess/PaymentSuccess';
+import Paymentes from '../component/Profile/Paymentes';
+import Notification from '../component/Profile/Notification';
 const CustomerRoute = () => {
     return (
         <div>
@@ -17,6 +19,8 @@ const CustomerRoute = () => {
                 <Route path='/restaurant/:city/:title/:id' element={<RestaurantDetails/>}></Route>
                 <Route path='/cart' element={<Cart/>}></Route>
                 <Route path='/my-profile/*' element={<Profile/>}></Route>
+                <Route path='/notifications' element={<Notification/>}></Route>
+                <Route path='/paymentes/history' element={<Paymentes/>}> </Route>
                 <Route path='/payment/success/:id' element={<PaymentSuccess/>}></Route>
             </Routes>
             <Auth/>

@@ -48,21 +48,21 @@ const FoodCategoryTable = () => {
 
   return (
     <Box>
-      <Card className="mt-1">
+      <Card sx={{background:"#EC7755"}} className="mt-1">
         <CardHeader
           action={
-            <IconButton onClick={handleOpen} aria-label="settings">
+            <IconButton sx={{color:"#FFFF"}} onClick={handleOpen}  aria-label="settings">
               <CreateIcon />
             </IconButton>
           }
           title="Food Category"
-          sx={{ pt: 2, alignItems: "center" }}
+          sx={{ pt: 2, alignItems: "center", color:"#FFFF" }}
         />
-        <TableContainer component={Paper}>
+        <TableContainer    sx={{background:"#FFF2E9"}} component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="order table">
             <TableHead>
               <TableRow>
-                <TableCell align="left">ID</TableCell>
+                <TableCell align="left">SL</TableCell>
                 <TableCell align="left">Name</TableCell>
               </TableRow>
             </TableHead>
@@ -73,7 +73,7 @@ const FoodCategoryTable = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
-                    {item?.id}
+                    {index+1}
                   </TableCell>
                   <TableCell align="left">{item.name}</TableCell>
                 </TableRow>
